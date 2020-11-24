@@ -1,0 +1,68 @@
+@import './common/variables'
+@import './common/mixins'
+
+.container
+  border-top: 0.5px solid $borderGrayColor
+  background: $whiteColor
+
+  @include respondTo($minWidth, 1024px)
+    border-top: 0
+    flex-shrink: 0
+    width: 260px
+    padding: 16px 20px
+    border-radius: 8px
+   
+.tabs
+  display: flex
+  align-items: center
+  overflow-x: auto
+
+  @include respondTo($minWidth, 1024px)
+    display: block
+    overflow-y: auto
+
+.itemActive
+  @include respondTo($minWidth, 1024px)
+    border-left: 3px solid $secondaryColor
+
+.item
+  @include respondTo($minWidth, 1024px)
+    border-left: 3px solid $letterGrayColor
+
+.tabItem
+  display: block
+  padding: 14px 1em 
+  color: rgba(5, 20, 65, 0.43) 
+  font-size: 18px
+  font-weight: 500
+  white-space: nowrap
+  cursor: pointer
+    
+  @include respondTo($minWidth, 575px)
+    padding-left: 2.5em
+    padding-right: 2.5em
+    
+  @include respondTo($maxWidth, 1023px)
+    border-bottom: 2px solid $letterGrayColor
+
+  @include respondTo($minWidth, 1024px)
+    padding: 16px 20px
+
+.tabActive
+  display: block
+  padding: 14px 1em
+  color: $secondaryColor  
+  font-size: 18px
+  font-weight: 500
+  white-space: nowrap
+  cursor: pointer
+
+  @include respondTo($minWidth, 575px)
+    padding-left: 2.5em
+    padding-right: 2.5em
+  
+  @include respondTo($maxWidth, 1023px)
+    border-bottom: 2px solid $secondaryColor
+
+  @include respondTo($minWidth, 1024px)
+    padding: 16px 20px

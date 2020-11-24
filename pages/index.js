@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Header from 'components/Header';
 import Hero from 'components/Hero';
+import Menu from 'components/Menu';
 import styles from 'styles/Home.module.sass';
 
 export default function Home() {
@@ -8,6 +9,12 @@ export default function Home() {
     <>
       <Header />
       <Hero />
+      <div className={styles.main}>
+        <div className={`${styles.container} pt-4`}>
+          <Menu />
+        </div>
+      </div>
+
       {/*<div className={styles.container}>
         <Head>
           <title>Create Next App</title>
