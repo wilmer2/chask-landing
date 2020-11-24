@@ -1,0 +1,43 @@
+@import '~bootstrap/scss/bootstrap'
+@import './common/variables'
+@import './common/mixins'
+
+html,
+body
+  padding: 0
+  margin: 0
+  font-family: $familyPrimary
+  background: $whiteColor
+
+figure
+  margin: 0
+  padding: 0
+
+button
+  &.btn-primary
+    border: none
+    background-color: $primaryColor
+    font-size: 14px
+    font-weight: bold
+    &:hover
+      background-color:#03219F
+    
+  
+  &.btn-danger
+    border: none
+    background-color:#F6495A
+    font-size:13px
+    font-weight: bold
+    &:hover
+      background-color:#FF0000
+    
+  
+  &.btn-light
+    border: none
+    font-size:13px
+    background-color:#E9EEFF
+    margin: 0.5rem
+    &:hover
+      background-color:#A1A1A1
+    
+  
