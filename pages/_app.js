@@ -1,7 +1,14 @@
-import '../styles/globals.css'
+/* eslint-disable react/jsx-props-no-spreading */
+import PropTypes from 'prop-types';
+import '../styles/globals.sass';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function ChaskiApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+ChaskiApp.propTypes = {
+  Component: PropTypes.func.isRequired,
+  pageProps: PropTypes.shape({}).isRequired,
+};
+
+export default ChaskiApp;
