@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Header from 'components/Header';
 import Hero from 'components/Hero';
 import Menu from 'components/Menu';
+import ProductList from 'components/ProductList';
 import styles from 'styles/Home.module.sass';
 
 export default function Home() {
@@ -12,6 +13,10 @@ export default function Home() {
       <div className={styles.main}>
         <div className={`${styles.container} pt-4`}>
           <Menu />
+          <div className="ml-lg-2 flex-lg-grow-1">
+            <ProductList />
+            <ProductList />
+          </div>
         </div>
       </div>
 

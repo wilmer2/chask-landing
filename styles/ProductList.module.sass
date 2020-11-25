@@ -1,0 +1,18 @@
+@import './common/variables'
+@import './common/mixins'
+
+.container
+  margin: 16px 8px
+  padding: 10px 8px
+  border-radius: 5px
+  background: $whiteColor
+
+  @include respondTo($minWidth, 1024px)
+    margin-top: 0
+    margin-bottom: 20px
+  
+.title 
+  color: $primaryColor  
+  font-family: $familyPrimary
+  font-weight: 400
+  font-size: 20px

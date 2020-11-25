@@ -2,7 +2,7 @@
 @import './common/mixins'
 
 .container
-  border-top: 0.5px solid $borderGrayColor
+  //border-top: 2px solid $borderGrayColor
   background: $whiteColor
 
   @include respondTo($minWidth, 1024px)
@@ -11,6 +11,7 @@
     width: 260px
     padding: 16px 20px
     border-radius: 8px
+    background: $whiteColor
    
 .tabs
   display: flex
@@ -39,8 +40,12 @@
   cursor: pointer
     
   @include respondTo($minWidth, 575px)
-    padding-left: 2.5em
-    padding-right: 2.5em
+    padding-left: 2.8em
+    padding-right: 2.8em
+
+  @include respondTo($minWidth, 950px)
+    padding-left: 3.2em
+    padding-right: 3.2em
     
   @include respondTo($maxWidth, 1023px)
     border-bottom: 2px solid $letterGrayColor
