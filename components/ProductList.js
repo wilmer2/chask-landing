@@ -7,6 +7,8 @@ const ProductList = () => (
     <div className="row">
       <ProductItem />
       <ProductItem />
+      <ProductItem />
+      <ProductItem />
     </div>
   </div>
 );

@@ -2,17 +2,32 @@
 @import './common/mixins'
 
 .container
-  //border-top: 2px solid $borderGrayColor
   background: $whiteColor
 
   @include respondTo($minWidth, 1024px)
+    height: 100%
+    max-height: calc( 100vh - 150px )
     border-top: 0
+    border: 0.5px solid $borderGrayColor
     flex-shrink: 0
     width: 260px
-    padding: 16px 20px
+    padding: 16px 0 16px 20px
     border-radius: 8px
     background: $whiteColor
+    overflow-y: auto
+
+    &::-webkit-scrollbar 
+      width: 8px
+      height: 0
+  
+
+    &::-webkit-scrollbar-thumb 
+      margin-top: 10px
+      border-radius: 8px
+      background-color: $whiteColor
    
+
+
 .tabs
   display: flex
   align-items: center
@@ -25,10 +40,14 @@
 .itemActive
   @include respondTo($minWidth, 1024px)
     border-left: 3px solid $secondaryColor
+    &:hover
+      background: #FFF8E1
 
 .item
   @include respondTo($minWidth, 1024px)
     border-left: 3px solid $letterGrayColor
+    &:hover
+      background: $bgHomeColor
 
 .tabItem
   display: block
@@ -38,6 +57,9 @@
   font-weight: 500
   white-space: nowrap
   cursor: pointer
+
+  &:hover
+    color: rgba(5, 20, 65, 0.43)
     
   @include respondTo($minWidth, 575px)
     padding-left: 2.8em
@@ -61,6 +83,9 @@
   font-weight: 500
   white-space: nowrap
   cursor: pointer
+
+  &:hover
+    color: $secondaryColor
 
   @include respondTo($minWidth, 575px)
     padding-left: 2.5em

@@ -1,7 +1,7 @@
 import styles from 'styles/ProductItem.module.sass';
 
 const ProductItem = () => (
-  <div className="col-md-6 col-12 mb-2">
+  <div className="col-md-6 col-12 mb-2 mb-lg-3">
     <div className={styles.container}>
       <figure className={styles.imgContainer}>
         <img
