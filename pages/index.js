@@ -13,7 +13,7 @@ export default function Home() {
       <div className={styles.main}>
         <div className={`${styles.container} pt-4 mb-2`}>
           <Menu />
-          <div className="ml-lg-2 flex-lg-grow-1">
+          <div className={`${styles.content} ml-lg-2 flex-lg-grow-1`}>
             <ProductList />
             <ProductList />
           </div>
