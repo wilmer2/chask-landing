@@ -1,0 +1,59 @@
+@import './common/variables'
+@import './common/mixins'
+
+.container
+  max-width: 360px
+
+.title
+  margin-bottom: 2px
+  color: $whiteColor
+  font-size: 16px
+
+.description
+  margin: 4px 0 0 0
+  padding: 0
+  color: $whiteColor
+  font-size: 14px
+  line-height: 1em
+
+  @include respondTo($minWidth, 1024px)
+    max-width: 190px
+
+
+.infoContainer
+  position: absolute
+  left: 0px
+  height: 140px
+  width: 50%
+  padding-top: 12px
+  padding-left: 16px
+  box-sizing: border-box
+  clip-path: polygon(1% 0, 100% 0, 92% 100%, 0% 100%)
+  z-index: 5
+
+.infoContent
+  display: flex
+  height: 100%
+  flex-direction: column
+  justify-content: space-around
+
+
+.imageContainer
+  height: 140px
+  width: 100%
+
+.image
+  height: 100%
+  width: 100%
+  object-fit: cover
+
+.priceContainer
+  width: 80px
+  border-radius: 5px
+  padding: 2px
+  margin-top: 5px
+  margin-bottom: 2px
+  color: $whiteColor
+  background: red
+  font-size: 14px
+  text-align: center

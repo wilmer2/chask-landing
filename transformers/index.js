@@ -6,7 +6,9 @@ export const toProductsByCategory = (productsListData) =>
   groupBy(productsListData, (product) => product.categoriaProducto);
 
 export const toProducts = (productsListData, images) => {
-  const products = productsListData.map((product) => {
+  const filteredProducts = productsListData.filter((product) => product.idTipo === 1);
+
+  const products = filteredProducts.map((product) => {
     const image = images.find((imageSearched) => imageSearched.idProducto === product.id);
 
     return {
@@ -16,6 +18,21 @@ export const toProducts = (productsListData, images) => {
   });
 
   return toProductsByCategory(products);
+};
+
+export const toPromotions = (productsListData, images) => {
+  const filteredProducts = productsListData.filter((product) => product.idTipo === 2);
+
+  const products = filteredProducts.map((product) => {
+    const image = images.find((imageSearched) => imageSearched.idProducto === product.id);
+
+    return {
+      ...product,
+      urlImagen: image.imagenSugerida.urlImagen,
+    };
+  });
+
+  return products;
 };
 
 export const toProductsParamsIds = (products) => {

@@ -1,0 +1,19 @@
+@import './common/variables'
+@import './common/mixins'
+
+.container
+  max-width: 916px
+  padding-left: 8px
+  padding-right: 8px
+  @include respondTo($minWidth, 1024px)
+    margin-bottom: 30px
+
+.title
+  margin-top: 16px
+  margin-left: 16px
+  color: $primaryColor
+
+  @include respondTo($minWidth, 1024px)
+    margin-top: 0
+    padding-top: 0
+
