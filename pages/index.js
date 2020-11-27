@@ -1,82 +1,81 @@
+import { useState } from 'react';
 import Head from 'next/head';
+import assign from 'lodash/assign';
+import flatten from 'lodash/flatten';
+import map from 'lodash/map';
+import values from 'lodash/values';
 import Header from 'components/Header';
 import Hero from 'components/Hero';
 import Menu from 'components/Menu';
 import ProductList from 'components/ProductList';
 import styles from 'styles/Home.module.sass';
+import { toOne, toProducts, toProductsParamsIds, toProductsByCategory } from 'transformers';
+import loginApi from 'shared/utils/api/login_api';
+import branchOfficeApi from 'shared/utils/api/branch_office_api';
+import shopApi from 'shared/utils/api/shop_api';
+import categoryApi from 'shared/utils/api/category_api';
+import productApi from 'shared/utils/api/product_api';
+import productImageApi from 'shared/utils/api/product_image_api';
 
-export default function Home() {
+export default function Home({ shop, categories, branchOffice, products }) {
+  const [selectedProducts, setSelectedProducts] = useState(products);
+
+  const handleSearchProducts = (search) => {
+    const productsListData = assign(products, {});
+    const productsValues = values(productsListData);
+    const productsValueOneLevel = flatten(productsValues);
+    const filteredProducts = productsValueOneLevel.filter((product) => {
+      const categoria = product.categoriaProducto.toLowerCase();
+      const nombre = product.nombreProducto.toLowerCase();
+
+      return categoria.includes(search) || nombre.includes(search);
+    });
+
+    setSelectedProducts(toProductsByCategory(filteredProducts));
+  };
+
   return (
     <>
       <Header />
-      <Hero />
+      <Hero branchOffice={branchOffice} shop={shop} onSearchProducts={handleSearchProducts} />
       <div className={styles.main}>
         <div className={`${styles.container} pt-4 mb-2`}>
-          <Menu />
-          <div className={`${styles.content} ml-lg-2 flex-lg-grow-1`}>
-            <ProductList />
-            <ProductList />
+          <Menu categories={categories} />
+          <div className="ml-lg-2 flex-lg-grow-1">
+            {map(selectedProducts, (productListData, productCategory) => (
+              <ProductList
+                key={productCategory}
+                productCategory={productCategory}
+                productListData={productListData}
+              />
+            ))}
           </div>
         </div>
       </div>
-
-      {/*<div className={styles.container}>
-        <Head>
-          <title>Create Next App</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
-        <main className={styles.main}>
-          <h1 className={styles.title}>
-            Welcome to
-            <a href="https://nextjs.org">Next.js!</a>
-          </h1>
-
-          <p className={styles.description}>
-            Get started by editing
-            <code className={styles.code}>pages/index.js</code>
-          </p>
-
-          <div className={styles.grid}>
-            <a href="https://nextjs.org/docs" className={styles.card}>
-              <h3>Documentation &rarr;</h3>
-              <p>Find in-depth information about Next.js features and API.</p>
-            </a>
-
-            <a href="https://nextjs.org/learn" className={styles.card}>
-              <h3>Learn &rarr;</h3>
-              <p>Learn about Next.js in an interactive course with quizzes!</p>
-            </a>
-
-            <a
-              href="https://github.com/vercel/next.js/tree/master/examples"
-              className={styles.card}
-            >
-              <h3>Examples &rarr;</h3>
-              <p>Discover and deploy boilerplate example Next.js projects.</p>
-            </a>
-
-            <a
-              href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              className={styles.card}
-            >
-              <h3>Deploy &rarr;</h3>
-              <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-            </a>
-          </div>
-        </main>
-
-        <footer className={styles.footer}>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Powered by
-            <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-          </a>
-        </footer>
-      </div>*/}
     </>
   );
+}
+
+export async function getStaticProps() {
+  const { accessToken } = await loginApi.login();
+
+  const branchName = "D'GARAY";
+  const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);
+  const branchOffice = toOne(branchOfficeResponse);
+  const shopResponse = await shopApi.findById(branchOffice.idTienda, accessToken);
+  const shop = toOne(shopResponse);
+  const categories = await categoryApi.findByBranchOfficeId(branchOffice.id, accessToken);
+  const productsResponse = await productApi.findByBranchOfficeId(branchOffice.id, accessToken);
+  const productImageParams = toProductsParamsIds(productsResponse);
+  const productImages = await productImageApi.findByProductIds(productImageParams, accessToken);
+  const products = toProducts(productsResponse, productImages);
+
+  return {
+    props: {
+      shop,
+      categories,
+      branchOffice,
+      products,
+    },
+  };
 }

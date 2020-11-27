@@ -1,60 +1,70 @@
 @import './common/variables'
 @import './common/mixins'
 
-.container
-  position: relative
-
-.banner 
-  height: 90px
-  width: 100%
-  object-fit: cover
-
-  @include respondTo($minWidth, 768px)
-    height: 140px  
-
 .logoContainer
-  height: 80px
-  width: 80px
+  height: 65px
+  width: 65px
+  flex-shrink: 0
+  box-sizing: 'border-box'
+  border: 0.1px solid $whiteColor
+  border-radius: 5px
+
+  @include respondTo($minWidth, 400px)
+    height: 90px
+    width: 90px
 
   @include respondTo($minWidth, 768px)
     width: 120px
     height: 120px
+
+  @include respondTo($minWidth, 1024px)
+    width: 130px
+    height: 130px
   
 .logo
   height: 100%
   width: 100%
-  border: 1px solid $whiteColor
-  border-radius: 5px
-  object-fit: cover
-
-  @include respondTo($minWidth, 768px)
-    border-color: transparent
-  
-.title
-  color: $whiteColor
-  font-family: $familyPrimary
-  font-size: 20px
-  font-weight: 500
-  z-index: 5
-
-  @include respondTo($minWidth, 768px)
-    font-size: 30px
-
-
-.infoContainer 
-  position: absolute
-  top: 25%
-  left: 16px
-  width: calc(100% - 16px)
-  z-index: 5
-
-  @include respondTo($minWidth, 768px)
-    top: 15px
-
-.infoContent
-  display: flex
-  align-items: center
+  object-fit: contain
  
-  @include respondTo($minWidth, 1200px) 
-    max-width: 1126px
-    margin: 0 auto
+.searchContainer
+  position: relative
+  height: fit-content
+  padding: 1px 0
+  width: calc( 100% - 75px  )
+  margin-left: 10px
+  border-radius: 5px
+  border: 2px solid $primaryColor
+  background-color: $bgInputColor
+
+  @include respondTo($minWidth, 400px)
+    margin-left: 20px
+    width: calc( 100% - 105px  )
+
+  @include respondTo($minWidth, 768px)
+    width: calc( 100% - 125px  )
+
+  @include respondTo($minWidth, 1024px)
+    width: calc( 100% - 155px  )
+
+.searchIconContainer
+  position: absolute
+  top: 1px
+  left: 5px
+  padding-right: 5px
+  border-right: 0.2px solid $primaryColor
+
+.searchInput
+  height: 100%
+  padding: 0
+  margin: 0
+  width: 100%
+  padding-left: 35px
+  font-family: $familyPrimary
+  font-style: italic
+  font-size: 16px
+  border: none
+  background-color: transparent
+
+  &:focus
+    outline: none
+  

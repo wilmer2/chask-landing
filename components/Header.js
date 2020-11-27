@@ -3,7 +3,7 @@ import { primaryColor } from 'shared/constants';
 import { ShoppingCart } from 'react-feather';
 
 const Header = () => (
-  <header className={`${styles.header} container-xl`}>
+  <header className={`${styles.header} container-lg`}>
     <figure className={styles.imgContainer}>
       <img className={styles.img} src="/assets/images/chaski-perfil.png" alt="Chaski logo" />
     </figure>

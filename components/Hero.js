@@ -1,26 +1,35 @@
+import { Search } from 'react-feather';
+import { primaryColor } from 'shared/constants';
 import styles from 'styles/Hero.module.sass';
 
-const Hero = () => (
-  <div className={styles.container}>
-    <img
-      className={styles.banner}
-      src="https://www.innaturale.com/es/wp-content/uploads/2018/11/restaurantes-de-comida-rapida.jpg"
-      alt="Restaurante banner"
-    />
+const Hero = ({ branchOffice, shop, onSearchProducts }) => {
+  const handleChangeText = (e) => onSearchProducts(e.target.value.toLowerCase());
 
-    <div className={styles.infoContainer}>
-      <div className={styles.infoContent}>
-        <figure className={styles.logoContainer}>
+  return (
+    <div className="container-lg pb-2">
+      <h1 className="h4">{branchOffice.nombreSucursal}</h1>
+      <div className="d-flex justify-content-between align-items-center">
+        <figure className={styles.logoContainer} style={{ background: branchOffice.colorSucursal }}>
           <img
             className={styles.logo}
-            src="https://www.innaturale.com/es/wp-content/uploads/2018/11/restaurantes-de-comida-rapida.jpg"
-            alt="Restaurante logo"
+            src={shop.imagenTienda}
+            alt={`${branchOffice.nombreSucursal} logo`}
           />
         </figure>
-        <span className={`${styles.title} ml-2 ml-lg-3`}>Casa burger</span>
+        <div className={`${styles.searchContainer}`}>
+          <input
+            className={styles.searchInput}
+            type="text"
+            placeholder="Buscar algún plato"
+            onChange={handleChangeText}
+          />
+          <div className={styles.searchIconContainer}>
+            <Search color={primaryColor} size={18} />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Hero;
