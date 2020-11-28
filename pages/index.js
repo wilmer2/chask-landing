@@ -3,12 +3,14 @@ import Head from 'next/head';
 import assign from 'lodash/assign';
 import flatten from 'lodash/flatten';
 import map from 'lodash/map';
+import isNull from 'lodash/isNull';
 import values from 'lodash/values';
 import Header from 'components/Header';
 import Hero from 'components/Hero';
 import Menu from 'components/Menu';
 import ProductList from 'components/ProductList';
 import PromotionList from 'components/PromotionList';
+import DetailModal from 'components/DetailModal';
 import styles from 'styles/Home.module.sass';
 import {
   toOne,
@@ -27,6 +29,10 @@ import productImageApi from 'shared/utils/api/product_image_api';
 
 export default function Home({ shop, categories, branchOffice, products, promotions }) {
   const [selectedProducts, setSelectedProducts] = useState(products);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleSelectProduct = (product) => setSelectedProduct(product);
+  const handleCloseModal = () => setSelectedProduct(null);
 
   const handleSearchProducts = (search) => {
     const productsListData = assign(products, {});
@@ -64,6 +70,7 @@ export default function Home({ shop, categories, branchOffice, products, promoti
             {map(selectedProducts, (productListData, productCategory) => (
               <ProductList
                 key={productCategory}
+                onSelectProduct={handleSelectProduct}
                 productCategory={productCategory}
                 productListData={productListData}
               />
@@ -71,6 +78,7 @@ export default function Home({ shop, categories, branchOffice, products, promoti
           </div>
         </div>
       </div>
+      {selectedProduct && <DetailModal product={selectedProduct} onCloseModal={handleCloseModal} />}
     </>
   );
 }
@@ -86,10 +94,11 @@ export async function getStaticProps() {
   const categoriesResponse = await categoryApi.findByBranchOfficeId(branchOffice.id, accessToken);
   const categories = toCategories(categoriesResponse);
   const productsResponse = await productApi.findByBranchOfficeId(branchOffice.id, accessToken);
-  const productImageParams = toProductsParamsIds(productsResponse);
-  const productImages = await productImageApi.findByProductIds(productImageParams, accessToken);
+  const productParamsIds = toProductsParamsIds(productsResponse);
+  const productImages = await productImageApi.findByProductIds(productParamsIds, accessToken);
   const products = toProducts(productsResponse, productImages);
   const promotions = toPromotions(productsResponse, productImages);
+  console.log('promotions', promotions);
 
   return {
     props: {

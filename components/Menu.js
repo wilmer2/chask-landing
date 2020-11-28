@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import Scrollspy from 'react-scrollspy';
 import { primaryColor } from 'shared/constants';
 import styles from 'styles/Menu.module.sass';

@@ -1,0 +1,68 @@
+@import './common/variables'
+@import './common/mixins'
+
+.overlay
+  position: fixed
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  padding-top: 10%
+  overflow-y: auto
+  background-color: rgba(0, 0, 0, 0.5)
+  z-index: 999
+
+.container
+  max-width: 750px
+  width: 100%
+  padding-right: 15px
+  padding-left: 15px
+  margin-right: auto
+  margin-left: auto
+
+.header
+  padding: 5px 16px
+
+  h2
+    margin-bottom: 0
+    font-family: $familyPrimary
+
+.infoContainer
+  padding: 10px 16px
+
+  @include respondTo($minWidth, 768px)
+    width: 50%
+    padding-top: 15px
+    padding-left: 20px
+
+
+.description
+  font-family: $familyPrimary
+  line-height: 1em
+
+  @include respondTo($minWidth, 768px)
+    margin-bottom: 10px
+
+
+.price
+  color: $letterGrayColor
+  font-family: $familyPrimary
+
+.imageContainer
+  height: 200px
+  width: 100%
+  border-right: 1px solid $borderGrayColor
+  background-repeat: no-repeat
+  background-position: center
+  background-size: cover
+  
+  @include respondTo($minWidth, 768px)
+    width: 50%
+    min-height: 300px
+
+
+.modalContainer
+  height: 100%,
+  width: 100%,
+  border-radius: 5px
+  background-color: white
