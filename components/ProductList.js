@@ -2,7 +2,7 @@ import styles from 'styles/ProductList.module.sass';
 import ProductItem from 'components/ProductItem';
 
 const ProductList = ({ productCategory, productListData }) => (
-  <div className={`${styles.container}`}>
+  <div className={`${styles.container}`} id={productCategory}>
     <h2 className={styles.title}>{productCategory}</h2>
     <div className="row">
       {productListData.map((product) => (

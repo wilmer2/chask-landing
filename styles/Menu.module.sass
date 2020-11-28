@@ -2,11 +2,17 @@
 @import './common/mixins'
 
 .container
+  position: sticky
+  top: 0
   background: $whiteColor
+  z-index: 20
+
 
   @include respondTo($minWidth, 1024px)
+    position: sticky
+    top: 10px
     height: 100%
-    max-height: calc( 100vh - 150px )
+    max-height: calc( 100vh - 120px )
     border-top: 0
     border: 0.5px solid $borderGrayColor
     flex-shrink: 0
@@ -38,10 +44,32 @@
     overflow-y: auto
 
 .itemActive
-  @include respondTo($minWidth, 1024px)
-    border-left: 3px solid $secondaryColor
+  a
+    display: block
+    padding: 14px 1em
+    color: $secondaryColor  
+    font-size: 18px
+    font-weight: 500
+    white-space: nowrap
+    cursor: pointer
+
     &:hover
-      background: #FFF8E1
+      color: $secondaryColor
+
+    @include respondTo($minWidth, 575px)
+      padding-left: 2.5em
+      padding-right: 2.5em
+  
+    @include respondTo($maxWidth, 1023px)
+      border-bottom: 2px solid $secondaryColor
+
+    @include respondTo($minWidth, 1024px)
+      padding: 16px 20px
+
+  @include respondTo($minWidth, 1024px)
+    border-left: 3px solid $secondaryColor !important
+    &:hover
+      background: #FFF8E1 !important
 
 .item
   @include respondTo($minWidth, 1024px)

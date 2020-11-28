@@ -2,11 +2,13 @@
 @import './common/mixins'
 
 .container
-  max-width: 916px
+  max-width: 100%  
   padding-left: 8px
   padding-right: 8px
+  
   @include respondTo($minWidth, 1024px)
-    margin-bottom: 30px
+    padding-left: 0
+    padding-right: 0
 
 .title
   margin-top: 16px
@@ -15,5 +17,6 @@
 
   @include respondTo($minWidth, 1024px)
     margin-top: 0
+    margin-left: 20px
     padding-top: 0
 

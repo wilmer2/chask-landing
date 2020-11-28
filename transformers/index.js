@@ -1,9 +1,13 @@
+import orderBy from 'lodash/orderBy';
 import groupBy from 'lodash/groupBy';
 
 export const toOne = (data) => data[0];
+export const toCategories = (categories) => orderBy(categories, ['nombreCategoria'], ['asc']);
 
-export const toProductsByCategory = (productsListData) =>
-  groupBy(productsListData, (product) => product.categoriaProducto);
+export const toProductsByCategory = (productsListData) => {
+  const products = orderBy(productsListData, ['categoriaProducto'], ['asc']);
+  return groupBy(products, (product) => product.categoriaProducto);
+};
 
 export const toProducts = (productsListData, images) => {
   const filteredProducts = productsListData.filter((product) => product.idTipo === 1);

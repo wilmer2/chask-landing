@@ -16,6 +16,7 @@ import {
   toProductsParamsIds,
   toProductsByCategory,
   toPromotions,
+  toCategories,
 } from 'transformers';
 import loginApi from 'shared/utils/api/login_api';
 import branchOfficeApi from 'shared/utils/api/branch_office_api';
@@ -43,15 +44,23 @@ export default function Home({ shop, categories, branchOffice, products, promoti
 
   return (
     <>
-      {/*<PromotionList />*/}
-
       <Header />
       <Hero branchOffice={branchOffice} shop={shop} onSearchProducts={handleSearchProducts} />
       <div className={styles.main}>
+        {promotions.length > 0 && (
+          <div className={`${styles.container} d-lg-block d-none pt-3`}>
+            <PromotionList promotions={promotions} />
+          </div>
+        )}
         <div className={`${styles.container} pt-4 mb-2`}>
           <Menu categories={categories} />
-          <div className="ml-lg-2 flex-lg-grow-1">
-            {promotions.length > 0 && <PromotionList promotions={promotions} />}
+
+          <div className={`${styles.content} ml-lg-2 flex-lg-grow-1`}>
+            {promotions.length > 0 && (
+              <div className="d-lg-none">
+                <PromotionList promotions={promotions} />
+              </div>
+            )}
             {map(selectedProducts, (productListData, productCategory) => (
               <ProductList
                 key={productCategory}
@@ -69,12 +78,13 @@ export default function Home({ shop, categories, branchOffice, products, promoti
 export async function getStaticProps() {
   const { accessToken } = await loginApi.login();
 
-  const branchName = 'LA SELVATICA'; //"D'GARAY";
+  const branchName = "D'GARAY";
   const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);
   const branchOffice = toOne(branchOfficeResponse);
   const shopResponse = await shopApi.findById(branchOffice.idTienda, accessToken);
   const shop = toOne(shopResponse);
-  const categories = await categoryApi.findByBranchOfficeId(branchOffice.id, accessToken);
+  const categoriesResponse = await categoryApi.findByBranchOfficeId(branchOffice.id, accessToken);
+  const categories = toCategories(categoriesResponse);
   const productsResponse = await productApi.findByBranchOfficeId(branchOffice.id, accessToken);
   const productImageParams = toProductsParamsIds(productsResponse);
   const productImages = await productImageApi.findByProductIds(productImageParams, accessToken);

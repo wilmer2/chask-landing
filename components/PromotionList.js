@@ -3,9 +3,28 @@ import PromotionItem from 'components/PromotionItem';
 import styles from 'styles/PromotionList.module.sass';
 
 const PromotionList = ({ promotions }) => {
+  const slidesToShowDesktop = () => {
+    if (promotions.length > 2) {
+      return 3;
+    }
+
+    if (promotions.length > 1) {
+      return 2;
+    }
+
+    return 1;
+  };
   const responsive = [
     {
       breakpoint: 2000,
+      settings: {
+        infinite: true,
+        slidesToShow: slidesToShowDesktop(),
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 1024,
       settings: {
         infinite: true,
         slidesToShow: promotions.length > 1 ? 2 : 1,
