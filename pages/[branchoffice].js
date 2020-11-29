@@ -90,10 +90,8 @@ export default function Home({ shop, categories, branchOffice, products, promoti
 
 export async function getServerSideProps({ params }) {
   const { accessToken } = await loginApi.login();
-  const branchName = params.branchoffice.toUpperCase().replace('-', ' '); //"D'GARAY"
-
+  const branchName = params.branchoffice.toUpperCase().replace('-', ' ');
   const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);
-
   const branchOffice = toOne(branchOfficeResponse);
   const shopResponse = await shopApi.findById(branchOffice.idTienda, accessToken);
   const shop = toOne(shopResponse);
