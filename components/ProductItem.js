@@ -1,3 +1,4 @@
+import capitalize from 'lodash/capitalize';
 import styles from 'styles/ProductItem.module.sass';
 
 const ProductItem = ({ product, onSelectProduct }) => {
@@ -19,7 +20,7 @@ const ProductItem = ({ product, onSelectProduct }) => {
           />
         </figure>
         <div className={styles.infoContainer}>
-          <h3 className={styles.title}>{product.nombreProducto}</h3>
+          <h3 className={styles.title}>{capitalize(product.nombreProducto)}</h3>
           <p className={styles.description}>{product.descripcionProducto}</p>
           <span className={styles.price}>S/.{product.precioProducto.toFixed(2)}</span>
         </div>

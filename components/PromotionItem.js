@@ -1,7 +1,7 @@
 import styles from 'styles/PromotionItem.module.sass';
 
 const PromotionItem = ({ promotion }) => (
-  <div className="d-flex position-relative col-12 col-sm-12" style={{ maxWidth: '500px' }}>
+  <div className={`${styles.container} d-flex position-relative col-12 col-sm-12`}>
     <div className={styles.infoContainer} style={{ background: promotion.colorProducto }}>
       <div className={styles.infoContent}>
         <div>
