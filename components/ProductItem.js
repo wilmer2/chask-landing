@@ -12,7 +12,11 @@ const ProductItem = ({ product, onSelectProduct }) => {
         tabIndex={0}
       >
         <figure className={styles.imgContainer}>
-          <img className={styles.img} src={product.urlImagen} alt="Producto" />
+          <img
+            className={styles.img}
+            src={product.urlImagen}
+            alt={`${product.nombreProducto} Logo`}
+          />
         </figure>
         <div className={styles.infoContainer}>
           <h3 className={styles.title}>{product.nombreProducto}</h3>

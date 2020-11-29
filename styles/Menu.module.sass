@@ -33,8 +33,6 @@
       margin-top: 10px
       border-radius: 8px
       background-color: $whiteColor
-   
-
 
 .tabs
   display: flex
@@ -46,14 +44,17 @@
     overflow-y: auto
 
 .itemActive
+  transition: 0.3s
+
   a
     display: block
     padding: 14px 1em
     color: $secondaryColor  
-    font-size: 20px
+    font-size: 18px
     font-weight: 500
     white-space: nowrap
     cursor: pointer
+    transition: 0.3s
 
     &:hover
       color: $secondaryColor
@@ -67,8 +68,6 @@
 
     @include respondTo($minWidth, 1024px)
       padding: 16px 18px
-      
-      
 
   @include respondTo($minWidth, 1024px)
     border-left: 3px solid $secondaryColor !important
@@ -76,6 +75,7 @@
       background: #FFF8E1 !important
 
 .item
+  transition: 0.3s
   @include respondTo($minWidth, 1024px)
     border-left: 3px solid $letterGrayColor
     &:hover
@@ -89,6 +89,7 @@
   font-weight: 500
   white-space: nowrap
   cursor: pointer
+  transition: 0.3
 
   &:hover
     color: rgba(5, 20, 65, 0.43)
@@ -107,24 +108,3 @@
   @include respondTo($minWidth, 1024px)
     padding: 16px 20px
 
-.tabActive
-  display: block
-  padding: 14px 1em
-  color: $secondaryColor  
-  font-size: 18px
-  font-weight: 500
-  white-space: nowrap
-  cursor: pointer
-
-  &:hover
-    color: $secondaryColor
-
-  @include respondTo($minWidth, 575px)
-    padding-left: 2.5em
-    padding-right: 2.5em
-  
-  @include respondTo($maxWidth, 1023px)
-    border-bottom: 2px solid $secondaryColor
-
-  @include respondTo($minWidth, 1024px)
-    padding: 16px 20px
