@@ -9,14 +9,23 @@ export const toProductsByCategory = (productsListData) => {
   return groupBy(products, (product) => product.categoriaProducto);
 };
 
-export const toProducts = (productsListData, images) => {
+export const toFeatures = (featuresPurchased, featuresFree, idProducto) => {
+  const features = [...featuresPurchased, ...featuresFree];
+  const filteredFeatures = features.filter((feature) => feature.idProducto === idProducto);
+
+  return groupBy(filteredFeatures, (feature) => feature.categoriaCaracteristica);
+};
+
+export const toProducts = (productsListData, images, featuresPurchased, featuresFree) => {
   const filteredProducts = productsListData.filter((product) => product.idTipo === 1);
 
   const products = filteredProducts.map((product) => {
     const image = images.find((imageSearched) => imageSearched.idProducto === product.id);
+    const features = toFeatures(featuresPurchased, featuresFree, product.id);
 
     return {
       ...product,
+      features,
       urlImagen: image.imagenSugerida.urlImagen,
     };
   });

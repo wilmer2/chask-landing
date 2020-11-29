@@ -1,9 +1,23 @@
 import { useEffect, useRef } from 'react';
+import capitalize from 'lodash/capitalize';
+import map from 'lodash/map';
+import isEmpty from 'lodash/isEmpty';
 import { X } from 'react-feather';
 import styles from 'styles/Detail.module.sass';
 
+const DetailFeature = ({ features, featureName }) => (
+  <div className="mt-2">
+    <strong>{capitalize(featureName)}</strong>
+    <ul>
+      {features.map((feature) => (
+        <li className="mt-1" key={feature.id}>
+          {capitalize(feature.nombreCaracteristica)}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 const DetailModal = ({ product, onCloseModal }) => {
-  console.log(product);
   const wrapperRef = useRef(null);
 
   useEffect(() => {
@@ -19,8 +33,6 @@ const DetailModal = ({ product, onCloseModal }) => {
     };
   }, [wrapperRef]);
 
-  console.log('products', product);
-
   return (
     <div className={styles.overlay}>
       <div className={styles.container}>
@@ -28,8 +40,8 @@ const DetailModal = ({ product, onCloseModal }) => {
           <div
             className={`${styles.header} d-flex d-md-none justify-content-between align-items-center`}
           >
-            <h2 className="h5">La Estancia</h2>
-            <X size={20} color="red" />
+            <h2 className="h5">{capitalize(product.nombreProducto)}</h2>
+            <X size={20} color="red" onClick={onCloseModal} />
           </div>
           <div className="d-md-flex">
             <figure
@@ -40,19 +52,26 @@ const DetailModal = ({ product, onCloseModal }) => {
             />
 
             <div className={styles.infoContainer}>
-              <h2 className="h4"> La Estancia</h2>
-              <p className={styles.description}>Lomito al juego servido con papas fritas y pan</p>
-              {/*<div className="mt-3">
-                <strong>Elige un sabor</strong>
-                <ul>
-                  <li className="mt-1"> Salsa de tomate</li>
-                  <li className="mt-1"> Salsa de tomate</li>
-                  <li className="mt-1"> Salsa de tomate</li>
-                  <li className="mt-1"> Salsa de tomate</li>
-                  <li className="mt-1"> Salsa de tomate</li>
-                </ul>
-              </div>*/}
-              <div className={`${styles.price} mt-3 ml-1`}>S/25.00</div>
+              <h2 className="h3"> {capitalize(product.nombreProducto)}</h2>
+              <p className={styles.description}>{product.descripcionProducto}</p>
+              {!isEmpty(product.features) && (
+                <div className="mt-3">
+                  {map(product.features, (features, featureName) => (
+                    <DetailFeature
+                      key={featureName}
+                      featureName={featureName}
+                      features={features}
+                    />
+                  ))}
+                </div>
+              )}
+              <div
+                className={`${styles.price} ${
+                  isEmpty(product.features) ? 'mt-1' : 'mt-2'
+                } mb-1 ml-1`}
+              >
+                S/{product.precioProducto.toFixed(2)}
+              </div>
             </div>
           </div>
         </div>

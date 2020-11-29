@@ -26,6 +26,7 @@ import shopApi from 'shared/utils/api/shop_api';
 import categoryApi from 'shared/utils/api/category_api';
 import productApi from 'shared/utils/api/product_api';
 import productImageApi from 'shared/utils/api/product_image_api';
+import productFeatureApi from 'shared/utils/api/product_feature_api';
 
 export default function Home({ shop, categories, branchOffice, products, promotions }) {
   const [selectedProducts, setSelectedProducts] = useState(products);
@@ -86,7 +87,7 @@ export default function Home({ shop, categories, branchOffice, products, promoti
 export async function getStaticProps() {
   const { accessToken } = await loginApi.login();
 
-  const branchName = "D'GARAY";
+  const branchName = 'LA TRATTORIA'; //"D'GARAY";
   const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);
   const branchOffice = toOne(branchOfficeResponse);
   const shopResponse = await shopApi.findById(branchOffice.idTienda, accessToken);
@@ -96,9 +97,10 @@ export async function getStaticProps() {
   const productsResponse = await productApi.findByBranchOfficeId(branchOffice.id, accessToken);
   const productParamsIds = toProductsParamsIds(productsResponse);
   const productImages = await productImageApi.findByProductIds(productParamsIds, accessToken);
-  const products = toProducts(productsResponse, productImages);
+  const featuresPurchased = await productFeatureApi.findAllPurchased(productParamsIds, accessToken);
+  const featuresFree = await productFeatureApi.findAllFree(productParamsIds, accessToken);
+  const products = toProducts(productsResponse, productImages, featuresPurchased, featuresFree);
   const promotions = toPromotions(productsResponse, productImages);
-  console.log('promotions', promotions);
 
   return {
     props: {
