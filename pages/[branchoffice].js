@@ -3,7 +3,6 @@ import Head from 'next/head';
 import assign from 'lodash/assign';
 import flatten from 'lodash/flatten';
 import map from 'lodash/map';
-import isNull from 'lodash/isNull';
 import values from 'lodash/values';
 import Header from 'components/Header';
 import Hero from 'components/Hero';
@@ -51,6 +50,11 @@ export default function Home({ shop, categories, branchOffice, products, promoti
 
   return (
     <>
+      <Head>
+        <link rel="shortcut icon" href="/assets/images/cabeza.png" />
+        <title>{branchOffice.nombreSucursal}</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <Header />
       <Hero branchOffice={branchOffice} shop={shop} onSearchProducts={handleSearchProducts} />
       <div className={styles.main}>
@@ -84,11 +88,12 @@ export default function Home({ shop, categories, branchOffice, products, promoti
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps({ params }) {
   const { accessToken } = await loginApi.login();
+  const branchName = params.branchoffice.toUpperCase().replace('-', ' '); //"D'GARAY"
 
-  const branchName = 'LA SELVATICA'; //"D'GARAY";
   const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);
+
   const branchOffice = toOne(branchOfficeResponse);
   const shopResponse = await shopApi.findById(branchOffice.idTienda, accessToken);
   const shop = toOne(shopResponse);
