@@ -87,7 +87,7 @@ export default function Home({ shop, categories, branchOffice, products, promoti
 export async function getStaticProps() {
   const { accessToken } = await loginApi.login();
 
-  const branchName = 'LA TRATTORIA'; //"D'GARAY";
+  const branchName = 'LA SELVATICA'; //"D'GARAY";
   const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);
   const branchOffice = toOne(branchOfficeResponse);
   const shopResponse = await shopApi.findById(branchOffice.idTienda, accessToken);
