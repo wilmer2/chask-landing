@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 import assign from 'lodash/assign';
 import flatten from 'lodash/flatten';
@@ -87,6 +88,122 @@ export default function Home({ shop, categories, branchOffice, products, promoti
     </>
   );
 }
+
+Home.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      idSucursal: PropTypes.number,
+      nombreCategoria: PropTypes.string,
+      descripcionCategoria: PropTypes.string,
+    })
+  ).isRequired,
+  shop: PropTypes.shape({
+    id: PropTypes.number,
+    idUser: PropTypes.number,
+    confirmarTienda: PropTypes.number,
+    estadoTienda: PropTypes.number,
+    emailTienda: PropTypes.string,
+    emailUsuario: PropTypes.string,
+    encargadoTienda: PropTypes.string,
+    imagenTienda: PropTypes.string,
+    nombreTienda: PropTypes.string,
+    nombreUsuario: PropTypes.string,
+    rucTienda: PropTypes.string,
+    tipoTienda: PropTypes.string,
+    razonSocialTienda: PropTypes.string,
+  }).isRequired,
+  branchOffice: PropTypes.shape({
+    id: PropTypes.number,
+    idTienda: PropTypes.number,
+    colorSucursal: PropTypes.string,
+    comisionSucursal: PropTypes.string,
+    direccionSucursal: PropTypes.string,
+    emailSucursal: PropTypes.string,
+    encargadoSucursal: PropTypes.string,
+    envioSucursal: PropTypes.number,
+    estadoSucursal: PropTypes.string,
+    latitud: PropTypes.number,
+    longitud: PropTypes.number,
+    nombreSucursal: PropTypes.string,
+    nombreTienda: PropTypes.string,
+    razonSocialSucursal: PropTypes.string,
+    recepcionistaSucursal: PropTypes.string,
+    recomendadoSucursal: PropTypes.string,
+    restriccionSucursal: PropTypes.string,
+    rucSucursal: PropTypes.string,
+    telefonoSucursal: PropTypes.string,
+    tiempoSucursal: PropTypes.number,
+    tipoSucursal: PropTypes.string,
+    whatsappSucursal: PropTypes.string,
+    zonaSucursal: PropTypes.string,
+  }).isRequired,
+
+  products: PropTypes.objectOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        idCategoria: PropTypes.number,
+        idSucursal: PropTypes.number,
+        idTipo: PropTypes.number,
+        categoriaProducto: PropTypes.string,
+        colorProducto: PropTypes.string,
+        descripcionExtendidaProducto: PropTypes.string,
+        descripcionProducto: PropTypes.string,
+        descuentoProducto: PropTypes.number,
+        diasProducto: PropTypes.string,
+        estadoProducto: PropTypes.string,
+        fechaProducto: PropTypes.string,
+        horaFinalProducto: PropTypes.string,
+        horaInicialProducto: PropTypes.string,
+        nombreProducto: PropTypes.string,
+        pesoProducto: PropTypes.number,
+        precioProducto: PropTypes.number,
+        sucursal: PropTypes.string,
+        tipoProducto: PropTypes.string,
+        urlImagen: PropTypes.string,
+        volumenProducto: PropTypes.number,
+        features: PropTypes.objectOf(
+          PropTypes.arrayOf(
+            PropTypes.shape({
+              id: PropTypes.number,
+              idProducto: PropTypes.number,
+              nombreCaracteristica: PropTypes.string,
+              categoriaCaracteristica: PropTypes.string,
+              limiteCaracteristica: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+              tipoCaracteristica: PropTypes.string,
+            })
+          )
+        ),
+      })
+    )
+  ).isRequired,
+  promotions: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      idCategoria: PropTypes.number,
+      idSucursal: PropTypes.number,
+      idTipo: PropTypes.number,
+      categoriaProducto: PropTypes.string,
+      colorProducto: PropTypes.string,
+      descripcionExtendidaProducto: PropTypes.string,
+      descripcionProducto: PropTypes.string,
+      descuentoProducto: PropTypes.number,
+      diasProducto: PropTypes.string,
+      estadoProducto: PropTypes.string,
+      fechaProducto: PropTypes.string,
+      horaFinalProducto: PropTypes.string,
+      horaInicialProducto: PropTypes.string,
+      nombreProducto: PropTypes.string,
+      pesoProducto: PropTypes.number,
+      precioProducto: PropTypes.number,
+      sucursal: PropTypes.string,
+      tipoProducto: PropTypes.string,
+      urlImagen: PropTypes.string,
+      volumenProducto: PropTypes.number,
+    })
+  ).isRequired,
+};
 
 export async function getServerSideProps({ params }) {
   const { accessToken } = await loginApi.login();

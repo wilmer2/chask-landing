@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Search } from 'react-feather';
 import { primaryColor } from 'shared/constants';
 import styles from 'styles/Hero.module.sass';
@@ -32,4 +33,47 @@ const Hero = ({ branchOffice, shop, onSearchProducts }) => {
   );
 };
 
+Hero.propTypes = {
+  shop: PropTypes.shape({
+    id: PropTypes.number,
+    idUser: PropTypes.number,
+    confirmarTienda: PropTypes.number,
+    estadoTienda: PropTypes.number,
+    emailTienda: PropTypes.string,
+    emailUsuario: PropTypes.string,
+    encargadoTienda: PropTypes.string,
+    imagenTienda: PropTypes.string,
+    nombreTienda: PropTypes.string,
+    nombreUsuario: PropTypes.string,
+    rucTienda: PropTypes.string,
+    tipoTienda: PropTypes.string,
+    razonSocialTienda: PropTypes.string,
+  }).isRequired,
+  branchOffice: PropTypes.shape({
+    id: PropTypes.number,
+    idTienda: PropTypes.number,
+    colorSucursal: PropTypes.string,
+    comisionSucursal: PropTypes.string,
+    direccionSucursal: PropTypes.string,
+    emailSucursal: PropTypes.string,
+    encargadoSucursal: PropTypes.string,
+    envioSucursal: PropTypes.number,
+    estadoSucursal: PropTypes.string,
+    latitud: PropTypes.number,
+    longitud: PropTypes.number,
+    nombreSucursal: PropTypes.string,
+    nombreTienda: PropTypes.string,
+    razonSocialSucursal: PropTypes.string,
+    recepcionistaSucursal: PropTypes.string,
+    recomendadoSucursal: PropTypes.string,
+    restriccionSucursal: PropTypes.string,
+    rucSucursal: PropTypes.string,
+    telefonoSucursal: PropTypes.string,
+    tiempoSucursal: PropTypes.number,
+    tipoSucursal: PropTypes.string,
+    whatsappSucursal: PropTypes.string,
+    zonaSucursal: PropTypes.string,
+  }).isRequired,
+  onSearchProducts: PropTypes.func.isRequired,
+};
 export default Hero;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Scrollspy from 'react-scrollspy';
 import capitalize from 'lodash/capitalize';
 import { primaryColor } from 'shared/constants';
@@ -23,6 +24,17 @@ const Menu = ({ categories }) => {
       </Scrollspy>
     </div>
   );
+};
+
+Menu.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      idSucursal: PropTypes.number,
+      nombreCategoria: PropTypes.string,
+      descripcionCategoria: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 export default Menu;
