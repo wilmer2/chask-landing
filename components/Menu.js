@@ -8,7 +8,7 @@ const Menu = ({ categories }) => {
   const sectionIds = categories.map((category) => category.nombreCategoria);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} stickyoffset={{ top: 10 }}>
       <h2 className="h5 mb-3 d-none d-xl-block ml-1" style={{ color: primaryColor }}>
         Categorías
       </h2>

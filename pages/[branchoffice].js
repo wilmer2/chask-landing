@@ -58,6 +58,7 @@ export default function Home({ shop, categories, branchOffice, products, promoti
       </Head>
       <Header />
       <Hero branchOffice={branchOffice} shop={shop} onSearchProducts={handleSearchProducts} />
+
       <div className={styles.main}>
         {promotions.length > 0 && (
           <div className={`${styles.container} d-lg-block d-none pt-3`}>
