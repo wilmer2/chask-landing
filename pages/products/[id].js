@@ -48,15 +48,17 @@ export default function Product({ product, branchOffice }) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <header className={styles.header}>
+      <header>
         <Link href={`/${branchOffice.nombreSucursal.toLowerCase().replace(/ /g, '-')}`}>
-          <figure className={styles.arrowContainer}>
-            <img className="img-fluid" src="/assets/images/back-bold.png" alt="Arrow" />
-          </figure>
+          <div className={styles.headerInfo}>
+            <figure className={styles.arrowContainer}>
+              <img className="img-fluid" src="/assets/images/back-bold.png" alt="Arrow" />
+            </figure>
+            <div className={`${styles.headerTitleContainer}`}>
+              <h2 className="h5">{capitalize(product.nombreProducto)}</h2>
+            </div>
+          </div>
         </Link>
-        <div className={`${styles.headerTitleContainer}`}>
-          <h2 className="h5">{capitalize(product.nombreProducto)}</h2>
-        </div>
       </header>
       <figure className={`${styles.imgContainer} mt-1`}>
         <img className={styles.img} src={product.urlImagen} alt={product.nombreProducto} />
