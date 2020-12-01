@@ -7,7 +7,7 @@ import { X } from 'react-feather';
 import styles from 'styles/ProductModal.module.sass';
 
 const ProductModalFeature = ({ features, featureName }) => (
-  <div className="mt-1">
+  <div className="mt-2">
     <strong>{capitalize(featureName)}</strong>
     <ul>
       {features.map((feature) => (
