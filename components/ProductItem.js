@@ -5,6 +5,7 @@ import styles from 'styles/ProductItem.module.sass';
 
 const ProductItem = ({ product, onSelectProduct }) => {
   const router = useRouter();
+
   const handleOnClick = () => {
     const match = window.matchMedia('(min-width: 768px)');
     if (match.matches) {
@@ -15,8 +16,8 @@ const ProductItem = ({ product, onSelectProduct }) => {
   };
 
   return (
-    <div className="col-md-6 col-12 mb-2 mb-lg-3">
-      <article
+    <article className="col-md-6 col-12 mb-2 mb-lg-3">
+      <div
         className={styles.container}
         onClick={handleOnClick}
         onKeyDown={handleOnClick}
@@ -38,8 +39,8 @@ const ProductItem = ({ product, onSelectProduct }) => {
             {product.precioProducto.toFixed(2)}
           </span>
         </div>
-      </article>
-    </div>
+      </div>
+    </article>
   );
 };
 
