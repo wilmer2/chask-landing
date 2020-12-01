@@ -19,6 +19,7 @@ const PromotionList = ({ promotions }) => {
     {
       breakpoint: 2000,
       settings: {
+        arrows: false,
         infinite: true,
         slidesToShow: slidesToShowDesktop(),
         slidesToScroll: 1,
@@ -27,6 +28,7 @@ const PromotionList = ({ promotions }) => {
     {
       breakpoint: 1024,
       settings: {
+        arrows: false,
         infinite: true,
         slidesToShow: promotions.length > 1 ? 2 : 1,
         slidesToScroll: 1,
@@ -35,6 +37,7 @@ const PromotionList = ({ promotions }) => {
     {
       breakpoint: 600,
       settings: {
+        arrows: false,
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -45,7 +48,14 @@ const PromotionList = ({ promotions }) => {
   return (
     <div className={styles.container}>
       <h2 className={`${styles.title} h4`}>Promociones</h2>
-      <Slider responsive={responsive} mobileFirst speed={500} autoplay autoplaySpeed={2000}>
+      <Slider
+        responsive={responsive}
+        arrows={false}
+        mobileFirst
+        speed={500}
+        autoplay
+        autoplaySpeed={2000}
+      >
         {promotions.map((promotion) => (
           <PromotionItem key={promotion.id} promotion={promotion} />
         ))}
