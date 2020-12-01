@@ -60,26 +60,28 @@ export default function Product({ product, branchOffice }) {
           </div>
         </Link>
       </header>
-      <figure className={`${styles.imgContainer} mt-1`}>
-        <img className={styles.img} src={product.urlImagen} alt={product.nombreProducto} />
-      </figure>
-      <div className={styles.infoContainer}>
-        <h1 className="h5">{capitalize(product.nombreProducto)}</h1>
-        <div>
-          <p className={styles.description}>{product.descripcionProducto}</p>
-          <span>
-            S/.
-            {product.precioProducto.toFixed(2)}
-          </span>
+      <section>
+        <figure className={`${styles.imgContainer} mt-1`}>
+          <img className={styles.img} src={product.urlImagen} alt={product.nombreProducto} />
+        </figure>
+        <div className={styles.infoContainer}>
+          <h1 className="h5">{capitalize(product.nombreProducto)}</h1>
+          <div>
+            <p className={styles.description}>{product.descripcionProducto}</p>
+            <span>
+              S/.
+              {product.precioProducto.toFixed(2)}
+            </span>
+          </div>
         </div>
-      </div>
-      {!isEmpty(product.features) && (
-        <>
-          {map(product.features, (features, featureName) => (
-            <ProductExtra key={featureName} featureName={featureName} features={features} />
-          ))}
-        </>
-      )}
+        {!isEmpty(product.features) && (
+          <>
+            {map(product.features, (features, featureName) => (
+              <ProductExtra key={featureName} featureName={featureName} features={features} />
+            ))}
+          </>
+        )}
+      </section>
     </Layout>
   );
 }
