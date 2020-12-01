@@ -5,8 +5,8 @@
   position: sticky
   top: 0
   background: $whiteColor
+  
   z-index: 20
-
 
   @include respondTo($minWidth, 1024px)
     position: sticky
@@ -37,6 +37,7 @@
   display: flex
   align-items: center
   overflow-x: auto
+
 
   @include respondTo($minWidth, 1024px)
     display: block
@@ -74,7 +75,6 @@
       background: #FFF8E1 !important
 
 .item
-  scroll-behavior: smooth
   transition: 0.3s
   @include respondTo($minWidth, 1024px)
     border-left: 3px solid $letterGrayColor
