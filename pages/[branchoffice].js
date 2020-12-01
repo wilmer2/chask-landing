@@ -60,9 +60,11 @@ export default function Home({ shop, categories, branchOffice, products, promoti
         <title>{branchOffice.nombreSucursal}</title>
       </Head>
       <Header />
-      <Hero branchOffice={branchOffice} shop={shop} onSearchProducts={handleSearchProducts} />
+      <section>
+        <Hero branchOffice={branchOffice} shop={shop} onSearchProducts={handleSearchProducts} />
+      </section>
 
-      <div className={styles.main}>
+      <section className={styles.main}>
         {promotions.length > 0 && (
           <div className={`${styles.container} d-lg-block d-none pt-3`}>
             <PromotionList promotions={promotions} />
@@ -87,7 +89,7 @@ export default function Home({ shop, categories, branchOffice, products, promoti
             ))}
           </div>
         </div>
-      </div>
+      </section>
       {selectedProduct && (
         <ProductModal product={selectedProduct} onCloseModal={handleCloseModal} />
       )}

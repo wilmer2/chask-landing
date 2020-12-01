@@ -3,7 +3,7 @@ import capitalize from 'lodash/capitalize';
 import styles from 'styles/PromotionItem.module.sass';
 
 const PromotionItem = ({ promotion }) => (
-  <div className={`${styles.container} d-flex position-relative col-12 col-sm-12`}>
+  <article className={`${styles.container} d-flex position-relative col-12 col-sm-12`}>
     <div className={styles.infoContainer} style={{ background: promotion.colorProducto }}>
       <div className={styles.infoContent}>
         <div>
@@ -21,7 +21,7 @@ const PromotionItem = ({ promotion }) => (
     <figure className={styles.imageContainer}>
       <img className={styles.image} src={promotion.urlImagen} alt="Promoción" />
     </figure>
-  </div>
+  </article>
 );
 
 PromotionItem.propTypes = {

@@ -16,7 +16,7 @@ const ProductItem = ({ product, onSelectProduct }) => {
 
   return (
     <div className="col-md-6 col-12 mb-2 mb-lg-3">
-      <div
+      <article
         className={styles.container}
         onClick={handleOnClick}
         onKeyDown={handleOnClick}
@@ -38,7 +38,7 @@ const ProductItem = ({ product, onSelectProduct }) => {
             {product.precioProducto.toFixed(2)}
           </span>
         </div>
-      </div>
+      </article>
     </div>
   );
 };
