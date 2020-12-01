@@ -71,19 +71,21 @@ export default function Home({ shop, categories, branchOffice, products, promoti
 
       <div className={styles.main}>
         {promotions.length > 0 && (
-          <div className={`${styles.container} d-lg-block d-none pt-3`}>
+          <>
+            {/*<div className={`${styles.container} d-lg-block d-none pt-3`}>
             <PromotionList promotions={promotions} />
-          </div>
+        </div>*/}
+          </>
         )}
         <div className={`${styles.container} pt-4 mb-2`}>
           <Menu categories={categories} />
 
           <div className={`${styles.content} ml-lg-2 flex-lg-grow-1`}>
-            {promotions.length > 0 && (
+            {/*promotions.length > 0 && (
               <div className="d-lg-none">
                 <PromotionList promotions={promotions} />
               </div>
-            )}
+            )*/}
             {map(selectedProducts, (productListData, productCategory) => (
               <ProductList
                 key={productCategory}

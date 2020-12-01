@@ -6,4 +6,10 @@ const searchByName = async (branchOfficeName, accessToken) => {
   return get(url, accessToken);
 };
 
-export default { searchByName };
+const findById = async (branchOfficeId, accessToken) => {
+  const url = `sucursal/${branchOfficeId}`;
+
+  return get(url, accessToken);
+};
+
+export default { searchByName, findById };

@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { ArrowLeft } from 'react-feather';
@@ -10,6 +11,7 @@ import loginApi from 'shared/utils/api/login_api';
 import productApi from 'shared/utils/api/product_api';
 import productImageApi from 'shared/utils/api/product_image_api';
 import productFeatureApi from 'shared/utils/api/product_feature_api';
+import branchOfficeApi from 'shared/utils/api/branch_office_api';
 import { toProduct } from 'transformers';
 import styles from 'styles/Product.module.sass';
 
@@ -28,7 +30,7 @@ const ProductExtra = ({ features, featureName }) => (
   </div>
 );
 
-export default function Product({ product }) {
+export default function Product({ product, branchOffice }) {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -44,14 +46,18 @@ export default function Product({ product }) {
       </Head>
 
       <header className={styles.header}>
-        <ArrowLeft size={30} color={primaryColor} />
-        <h2 className="h4 ml-2">{capitalize(product.nombreProducto)}</h2>
+        <Link href={`/${branchOffice.nombreSucursal.toLowerCase().replace(/ /g, '-')}`}>
+          <ArrowLeft size={25} color={primaryColor} />
+        </Link>
+        <div className="ml-2">
+          <h2 className="h5">{capitalize(product.nombreProducto)}</h2>
+        </div>
       </header>
       <figure className={`${styles.imgContainer} mt-1`}>
         <img className={styles.img} src={product.urlImagen} alt={product.nombreProducto} />
       </figure>
       <div className={styles.infoContainer}>
-        <h1 className="h4">{capitalize(product.nombreProducto)}</h1>
+        <h1 className="h5">{capitalize(product.nombreProducto)}</h1>
         <div>
           <p className={styles.description}>{product.descripcionProducto}</p>
           <span>
@@ -73,9 +79,35 @@ export default function Product({ product }) {
 
 Product.defaultProps = {
   product: null,
+  branchOffice: null,
 };
 
 Product.propTypes = {
+  branchOffice: PropTypes.shape({
+    id: PropTypes.number,
+    idTienda: PropTypes.number,
+    colorSucursal: PropTypes.string,
+    comisionSucursal: PropTypes.string,
+    direccionSucursal: PropTypes.string,
+    emailSucursal: PropTypes.string,
+    encargadoSucursal: PropTypes.string,
+    envioSucursal: PropTypes.number,
+    estadoSucursal: PropTypes.string,
+    latitud: PropTypes.number,
+    longitud: PropTypes.number,
+    nombreSucursal: PropTypes.string,
+    nombreTienda: PropTypes.string,
+    razonSocialSucursal: PropTypes.string,
+    recepcionistaSucursal: PropTypes.string,
+    recomendadoSucursal: PropTypes.string,
+    restriccionSucursal: PropTypes.string,
+    rucSucursal: PropTypes.string,
+    telefonoSucursal: PropTypes.string,
+    tiempoSucursal: PropTypes.number,
+    tipoSucursal: PropTypes.string,
+    whatsappSucursal: PropTypes.string,
+    zonaSucursal: PropTypes.string,
+  }).isRequired,
   product: PropTypes.shape({
     id: PropTypes.number,
     idCategoria: PropTypes.number,
@@ -142,10 +174,12 @@ export async function getStaticProps({ params }) {
   const featuresPurchased = await productFeatureApi.findByProductIdPurchased(id, accessToken);
   const featuresFree = await productFeatureApi.findByProductIdFree(id, accessToken);
   const product = toProduct(productsResponse, image, featuresPurchased, featuresFree);
+  const branchOffice = await branchOfficeApi.findById(product.idSucursal, accessToken);
 
   return {
     props: {
       product,
+      branchOffice,
     },
   };
 }
