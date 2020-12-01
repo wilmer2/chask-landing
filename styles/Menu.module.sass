@@ -74,6 +74,7 @@
       background: #FFF8E1 !important
 
 .item
+  scroll-behavior: smooth
   transition: 0.3s
   @include respondTo($minWidth, 1024px)
     border-left: 3px solid $letterGrayColor
@@ -88,7 +89,7 @@
   font-weight: 500
   white-space: nowrap
   cursor: pointer
-  transition: 0.3
+  transition: 0.3s
 
   &:hover
     color: rgba(5, 20, 65, 0.43)

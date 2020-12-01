@@ -10,13 +10,14 @@
   font-size: 16px
 
 .description
+  max-width: 150px
   margin: 4px 0 0 0
   padding: 0
   color: $whiteColor
   font-size: 14px
   line-height: 1em
 
-  @include respondTo($minWidth, 1024px)
+  @include respondTo($minWidth, 768px)
     max-width: 160px
 
 
