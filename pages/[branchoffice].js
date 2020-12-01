@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import Layout from 'components/Layout';
 import Head from 'next/head';
 import assign from 'lodash/assign';
 import flatten from 'lodash/flatten';
@@ -30,7 +30,6 @@ import productImageApi from 'shared/utils/api/product_image_api';
 import productFeatureApi from 'shared/utils/api/product_feature_api';
 
 export default function Home({ shop, categories, branchOffice, products, promotions }) {
-  const router = useRouter();
   const [selectedProducts, setSelectedProducts] = useState(products);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -55,16 +54,10 @@ export default function Home({ shop, categories, branchOffice, products, promoti
     setSelectedProducts(products);
   }, [products]);
 
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <>
+    <Layout>
       <Head>
-        <link rel="shortcut icon" href="/assets/images/cabeza.png" />
         <title>{branchOffice.nombreSucursal}</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Header />
       <Hero branchOffice={branchOffice} shop={shop} onSearchProducts={handleSearchProducts} />
@@ -98,7 +91,7 @@ export default function Home({ shop, categories, branchOffice, products, promoti
       {selectedProduct && (
         <ProductModal product={selectedProduct} onCloseModal={handleCloseModal} />
       )}
-    </>
+    </Layout>
   );
 }
 
@@ -226,14 +219,7 @@ Home.propTypes = {
   ),
 };
 
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: true,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { accessToken } = await loginApi.login();
   const branchName = params.branchoffice.toUpperCase().replace('-', ' ');
   const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);

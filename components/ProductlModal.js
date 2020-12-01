@@ -53,7 +53,7 @@ const ProductModal = ({ product, onCloseModal }) => {
             />
 
             <div className={styles.infoContainer}>
-              <h2 className="h3">{capitalize(product.nombreProducto)}</h2>
+              <h2 className={`h3 ${styles.title}`}>{capitalize(product.nombreProducto)}</h2>
               <p className={styles.description}>{product.descripcionProducto}</p>
               {!isEmpty(product.features) && (
                 <div className="mt-1">

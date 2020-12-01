@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import capitalize from 'lodash/capitalize';
 import styles from 'styles/PromotionItem.module.sass';
 
 const PromotionItem = ({ promotion }) => (
@@ -6,7 +7,7 @@ const PromotionItem = ({ promotion }) => (
     <div className={styles.infoContainer} style={{ background: promotion.colorProducto }}>
       <div className={styles.infoContent}>
         <div>
-          <h3 className={styles.title}>{promotion.nombreProducto}</h3>
+          <h3 className={styles.title}>{capitalize(promotion.nombreProducto)}</h3>
           <p className={styles.description}>{promotion.descripcionProducto.toLowerCase()}</p>
         </div>
 

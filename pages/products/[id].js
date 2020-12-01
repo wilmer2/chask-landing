@@ -7,6 +7,7 @@ import capitalize from 'lodash/capitalize';
 import map from 'lodash/map';
 import isEmpty from 'lodash/isEmpty';
 import { primaryColor } from 'shared/constants';
+import Layout from 'components/Layout';
 import loginApi from 'shared/utils/api/login_api';
 import productApi from 'shared/utils/api/product_api';
 import productImageApi from 'shared/utils/api/product_image_api';
@@ -34,11 +35,15 @@ export default function Product({ product, branchOffice }) {
   const router = useRouter();
 
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return (
+      <Layout>
+        <div className="pt pl-4">Cargando...</div>
+      </Layout>
+    );
   }
 
   return (
-    <>
+    <Layout>
       <Head>
         <link rel="shortcut icon" href="/assets/images/cabeza.png" />
         <title>{product.nombreProducto}</title>
@@ -73,7 +78,7 @@ export default function Product({ product, branchOffice }) {
           ))}
         </>
       )}
-    </>
+    </Layout>
   );
 }
 
@@ -107,7 +112,7 @@ Product.propTypes = {
     tipoSucursal: PropTypes.string,
     whatsappSucursal: PropTypes.string,
     zonaSucursal: PropTypes.string,
-  }).isRequired,
+  }),
   product: PropTypes.shape({
     id: PropTypes.number,
     idCategoria: PropTypes.number,
