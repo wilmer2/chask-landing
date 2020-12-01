@@ -16,6 +16,16 @@ export const toFeatures = (featuresPurchased, featuresFree, idProducto) => {
   return groupBy(filteredFeatures, (feature) => feature.categoriaCaracteristica);
 };
 
+export const toProduct = (product, image, featuresPurchased, featuresFree) => {
+  const features = toFeatures(featuresPurchased, featuresFree, product.id);
+
+  return {
+    ...product,
+    features,
+    urlImagen: image.imagenSugerida.urlImagen,
+  };
+};
+
 export const toProducts = (productsListData, images, featuresPurchased, featuresFree) => {
   const filteredProducts = productsListData.filter((product) => product.idTipo === 1);
 

@@ -6,4 +6,10 @@ const findByBranchOfficeId = async (branchOfficeId, accessToken) => {
   return get(url, accessToken);
 };
 
-export default { findByBranchOfficeId };
+const findById = async (productId, accessToken) => {
+  const url = `producto/${productId}`;
+
+  return get(url, accessToken);
+};
+
+export default { findByBranchOfficeId, findById };

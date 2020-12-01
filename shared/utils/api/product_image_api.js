@@ -8,4 +8,9 @@ const findByProductIds = async (productIds, accessToken) => {
   return get(url, accessToken);
 };
 
-export default { findAll, findByProductIds };
+const findOne = async (productId, accessToken) => {
+  const url = `imagen-producto/buscar-uno?campo=id_producto&valor=${productId}`;
+
+  return get(url, accessToken);
+};
+export default { findAll, findByProductIds, findOne };

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import assign from 'lodash/assign';
@@ -10,7 +11,7 @@ import Hero from 'components/Hero';
 import Menu from 'components/Menu';
 import ProductList from 'components/ProductList';
 import PromotionList from 'components/PromotionList';
-import DetailModal from 'components/DetailModal';
+import ProductModal from 'components/ProductlModal';
 import styles from 'styles/Home.module.sass';
 import {
   toOne,
@@ -29,6 +30,7 @@ import productImageApi from 'shared/utils/api/product_image_api';
 import productFeatureApi from 'shared/utils/api/product_feature_api';
 
 export default function Home({ shop, categories, branchOffice, products, promotions }) {
+  const router = useRouter();
   const [selectedProducts, setSelectedProducts] = useState(products);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -48,6 +50,14 @@ export default function Home({ shop, categories, branchOffice, products, promoti
 
     setSelectedProducts(toProductsByCategory(filteredProducts));
   };
+
+  useEffect(() => {
+    setSelectedProducts(products);
+  }, [products]);
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -85,10 +95,20 @@ export default function Home({ shop, categories, branchOffice, products, promoti
           </div>
         </div>
       </div>
-      {selectedProduct && <DetailModal product={selectedProduct} onCloseModal={handleCloseModal} />}
+      {selectedProduct && (
+        <ProductModal product={selectedProduct} onCloseModal={handleCloseModal} />
+      )}
     </>
   );
 }
+
+Home.defaultProps = {
+  categories: [],
+  shop: null,
+  branchOffice: null,
+  products: null,
+  promotions: [],
+};
 
 Home.propTypes = {
   categories: PropTypes.arrayOf(
@@ -98,7 +118,7 @@ Home.propTypes = {
       nombreCategoria: PropTypes.string,
       descripcionCategoria: PropTypes.string,
     })
-  ).isRequired,
+  ),
   shop: PropTypes.shape({
     id: PropTypes.number,
     idUser: PropTypes.number,
@@ -113,7 +133,7 @@ Home.propTypes = {
     rucTienda: PropTypes.string,
     tipoTienda: PropTypes.string,
     razonSocialTienda: PropTypes.string,
-  }).isRequired,
+  }),
   branchOffice: PropTypes.shape({
     id: PropTypes.number,
     idTienda: PropTypes.number,
@@ -138,7 +158,7 @@ Home.propTypes = {
     tipoSucursal: PropTypes.string,
     whatsappSucursal: PropTypes.string,
     zonaSucursal: PropTypes.string,
-  }).isRequired,
+  }),
 
   products: PropTypes.objectOf(
     PropTypes.arrayOf(
@@ -178,7 +198,7 @@ Home.propTypes = {
         ),
       })
     )
-  ).isRequired,
+  ),
   promotions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -203,10 +223,17 @@ Home.propTypes = {
       urlImagen: PropTypes.string,
       volumenProducto: PropTypes.number,
     })
-  ).isRequired,
+  ),
 };
 
-export async function getServerSideProps({ params }) {
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  };
+}
+
+export async function getStaticProps({ params }) {
   const { accessToken } = await loginApi.login();
   const branchName = params.branchoffice.toUpperCase().replace('-', ' ');
   const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);

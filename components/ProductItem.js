@@ -1,9 +1,19 @@
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import capitalize from 'lodash/capitalize';
 import styles from 'styles/ProductItem.module.sass';
 
 const ProductItem = ({ product, onSelectProduct }) => {
-  const handleOnClick = () => onSelectProduct(product);
+  const router = useRouter();
+  const handleOnClick = () => {
+    const match = window.matchMedia('(min-width: 768px)');
+    if (match.matches) {
+      onSelectProduct(product);
+    } else {
+      router.push(`/products/${product.id}`);
+    }
+  };
+
   return (
     <div className="col-md-6 col-12 mb-2 mb-lg-3">
       <div
@@ -23,7 +33,10 @@ const ProductItem = ({ product, onSelectProduct }) => {
         <div className={styles.infoContainer}>
           <h3 className={styles.title}>{capitalize(product.nombreProducto)}</h3>
           <p className={styles.description}>{product.descripcionProducto}</p>
-          <span className={styles.price}>S/.{product.precioProducto.toFixed(2)}</span>
+          <span className={styles.price}>
+            S/.
+            {product.precioProducto.toFixed(2)}
+          </span>
         </div>
       </div>
     </div>

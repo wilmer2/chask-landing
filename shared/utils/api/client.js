@@ -18,6 +18,7 @@ export const post = async (endpoint, body) => {
 export const get = async (endpoint, accessToken) => {
   const headers = { Authorization: `Bearer ${accessToken}` };
   const response = await fetch(`${BASE_URL}${endpoint}`, { headers, method: GET });
+
   const data = await response.json();
 
   return camelizeKeys(data);
