@@ -2,11 +2,9 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import { ArrowLeft } from 'react-feather';
 import capitalize from 'lodash/capitalize';
 import map from 'lodash/map';
 import isEmpty from 'lodash/isEmpty';
-import { primaryColor } from 'shared/constants';
 import Layout from 'components/Layout';
 import loginApi from 'shared/utils/api/login_api';
 import productApi from 'shared/utils/api/product_api';
@@ -52,9 +50,11 @@ export default function Product({ product, branchOffice }) {
 
       <header className={styles.header}>
         <Link href={`/${branchOffice.nombreSucursal.toLowerCase().replace(/ /g, '-')}`}>
-          <ArrowLeft size={25} color={primaryColor} />
+          <figure className={styles.arrowContainer}>
+            <img className="img-fluid" src="/assets/images/back-bold.png" alt="Arrow" />
+          </figure>
         </Link>
-        <div className="ml-2">
+        <div className={`${styles.headerTitleContainer}`}>
           <h2 className="h5">{capitalize(product.nombreProducto)}</h2>
         </div>
       </header>
