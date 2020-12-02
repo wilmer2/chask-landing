@@ -10,16 +10,19 @@
   font-size: 16px
 
 .description
-  max-width: 140px
+  max-width: 130px
   margin: 4px 0 0 0
   padding: 0
   color: $whiteColor
   font-size: 12px
   line-height: 1em
 
+  @include respondTo($minWidth, 359px)
+    max-width: 140px
+ 
   @include respondTo($minWidth, 768px)
     max-width: 150px
-    font-size: 14px
+    font-size: 13px
 
 .infoContainer
   position: absolute
@@ -47,6 +50,7 @@
   height: 100%
   width: 100%
   object-fit: cover
+
 
 .priceContainer
   width: 80px
