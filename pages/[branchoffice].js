@@ -21,6 +21,7 @@ import {
   toPromotions,
   toCategories,
 } from 'transformers';
+import strNormalize from 'shared/utils/strNormalize';
 import loginApi from 'shared/utils/api/login_api';
 import branchOfficeApi from 'shared/utils/api/branch_office_api';
 import shopApi from 'shared/utils/api/shop_api';
@@ -31,28 +32,34 @@ import productFeatureApi from 'shared/utils/api/product_feature_api';
 
 export default function Home({ shop, categories, branchOffice, products, promotions }) {
   const [selectedProducts, setSelectedProducts] = useState(products);
+  const [selectedPromotions, setSelectedPromotions] = useState(promotions);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleSelectProduct = (product) => setSelectedProduct(product);
   const handleCloseModal = () => setSelectedProduct(null);
 
+  const handleFilterData = (data, str) => {
+    const filteredProducts = data.filter((product) => {
+      const categoria = strNormalize(product.categoriaProducto);
+      const nombre = strNormalize(product.nombreProducto);
+
+      return categoria.includes(str) || nombre.includes(str);
+    });
+
+    return filteredProducts;
+  };
+
   const handleSearchProducts = (search) => {
+    const searchNormalized = strNormalize(search);
     const productsListData = assign(products, {});
     const productsValues = values(productsListData);
     const productsValueOneLevel = flatten(productsValues);
-    const filteredProducts = productsValueOneLevel.filter((product) => {
-      const categoria = product.categoriaProducto.toLowerCase();
-      const nombre = product.nombreProducto.toLowerCase();
-
-      return categoria.includes(search) || nombre.includes(search);
-    });
+    const filteredProducts = handleFilterData(productsValueOneLevel, searchNormalized);
+    const filteredPromotions = handleFilterData(promotions, searchNormalized);
 
     setSelectedProducts(toProductsByCategory(filteredProducts));
+    setSelectedPromotions(filteredPromotions);
   };
-
-  useEffect(() => {
-    setSelectedProducts(products);
-  }, [products]);
 
   return (
     <Layout>
@@ -65,18 +72,18 @@ export default function Home({ shop, categories, branchOffice, products, promoti
       </section>
 
       <section className={styles.main}>
-        {promotions.length > 0 && (
+        {selectedPromotions.length > 0 && (
           <div className={`${styles.container} d-lg-block d-none pt-3`}>
-            <PromotionList promotions={promotions} />
+            <PromotionList promotions={selectedPromotions} />
           </div>
         )}
         <div className={`${styles.container} pt-4 mb-2`}>
           <Menu categories={categories} />
 
           <div className={`${styles.content} ml-lg-2 flex-lg-grow-1`}>
-            {promotions.length > 0 && (
+            {selectedPromotions.length > 0 && (
               <div className="d-lg-none">
-                <PromotionList promotions={promotions} />
+                <PromotionList promotions={selectedPromotions} />
               </div>
             )}
             {map(selectedProducts, (productListData, productCategory) => (
