@@ -168,7 +168,7 @@ ProductExtra.propTypes = {
   ).isRequired,
 };
 
-export async function getStaticPaths() {
+/*export async function getStaticPaths() {
   return {
     paths: [],
     fallback: true,
@@ -176,6 +176,23 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  const { id } = params;
+  const { accessToken } = await loginApi.login();
+  const productsResponse = await productApi.findById(id, accessToken);
+  const image = await productImageApi.findOne(id, accessToken);
+  const featuresPurchased = await productFeatureApi.findByProductIdPurchased(id, accessToken);
+  const featuresFree = await productFeatureApi.findByProductIdFree(id, accessToken);
+  const product = toProduct(productsResponse, image, featuresPurchased, featuresFree);
+  const branchOffice = await branchOfficeApi.findById(product.idSucursal, accessToken);
+
+  return {
+    props: {
+      product,
+      branchOffice,
+    },
+  };
+}*/
+export async function getServerSideProps({ params }) {
   const { id } = params;
   const { accessToken } = await loginApi.login();
   const productsResponse = await productApi.findById(id, accessToken);
