@@ -30,15 +30,15 @@ const ProductExtra = ({ features, featureName }) => (
 );
 
 export default function Product({ product, branchOffice }) {
-  const router = useRouter();
+  //const router = useRouter();
 
-  if (router.isFallback) {
+  /*if (router.isFallback) {
     return (
       <Layout>
         <div className="pt pl-4">Cargando...</div>
       </Layout>
     );
-  }
+  }*/
 
   return (
     <Layout>
