@@ -48,7 +48,7 @@ const ProductModal = ({ product, onCloseModal }) => {
             <figure
               className={styles.imageContainer}
               style={{
-                backgroundImage: `url(${product.urlImagen}), url(/assets/images/chaski_splash.png)`,
+                backgroundImage: `url(${product.urlImagen})`,
               }}
             />
 
