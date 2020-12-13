@@ -231,7 +231,7 @@ Home.propTypes = {
 export async function getServerSideProps({ params }) {
   try {
     const { accessToken } = await loginApi.login();
-    const branchName = "D'GARAY"; // params.branchoffice.toUpperCase().replace('-', ' ');
+    const branchName = params.branchoffice.toUpperCase().replace('-', ' '); // "D'GARAY";
     const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);
     const branchOffice = toOne(branchOfficeResponse);
     const shopResponse = await shopApi.findById(branchOffice.idTienda, accessToken);
