@@ -36,7 +36,7 @@ export const toProducts = (productsListData, images, featuresPurchased, features
     return {
       ...product,
       features,
-      urlImagen: image.imagenSugerida.urlImagen,
+      urlImagen: image && image.imagenSugerida ? image.imagenSugerida.urlImagen : '',
     };
   });
 

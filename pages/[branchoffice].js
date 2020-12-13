@@ -229,29 +229,45 @@ Home.propTypes = {
 };
 
 export async function getServerSideProps({ params }) {
-  const { accessToken } = await loginApi.login();
-  const branchName = params.branchoffice.toUpperCase().replace('-', ' ');
-  const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);
-  const branchOffice = toOne(branchOfficeResponse);
-  const shopResponse = await shopApi.findById(branchOffice.idTienda, accessToken);
-  const shop = toOne(shopResponse);
-  const categoriesResponse = await categoryApi.findByBranchOfficeId(branchOffice.id, accessToken);
-  const categories = toCategories(categoriesResponse);
-  const productsResponse = await productApi.findByBranchOfficeId(branchOffice.id, accessToken);
-  const productParamsIds = toProductsParamsIds(productsResponse);
-  const productImages = await productImageApi.findByProductIds(productParamsIds, accessToken);
-  const featuresPurchased = await productFeatureApi.findAllPurchased(productParamsIds, accessToken);
-  const featuresFree = await productFeatureApi.findAllFree(productParamsIds, accessToken);
-  const products = toProducts(productsResponse, productImages, featuresPurchased, featuresFree);
-  const promotions = toPromotions(productsResponse, productImages);
-
-  return {
-    props: {
-      shop,
-      categories,
-      branchOffice,
-      products,
-      promotions,
-    },
-  };
+  try {
+    const { accessToken } = await loginApi.login();
+    const branchName = params.branchoffice.toUpperCase().replace('-', ' '); // "D'GARAY";
+    const branchOfficeResponse = await branchOfficeApi.searchByName(branchName, accessToken);
+    const branchOffice = toOne(branchOfficeResponse);
+    const shopResponse = await shopApi.findById(branchOffice.idTienda, accessToken);
+    const shop = toOne(shopResponse);
+    const categoriesResponse = await categoryApi.findByBranchOfficeId(branchOffice.id, accessToken);
+    const categories = toCategories(categoriesResponse);
+    const productsResponse = await productApi.findByBranchOfficeId(branchOffice.id, accessToken);
+    const productParamsIds = toProductsParamsIds(productsResponse);
+    const productImages = await productImageApi.findByProductIds(productParamsIds, accessToken);
+    const featuresPurchased = await productFeatureApi.findAllPurchased(
+      productParamsIds,
+      accessToken
+    );
+    const featuresFree = await productFeatureApi.findAllFree(productParamsIds, accessToken);
+    const products = toProducts(productsResponse, productImages, featuresPurchased, featuresFree);
+    const promotions = toPromotions(productsResponse, productImages);
+    return {
+      props: {
+        shop,
+        categories,
+        branchOffice,
+        products,
+        promotions,
+      },
+    };
+  } catch (error) {
+    console.log('error', error);
+    return {
+      props: {
+        error: true,
+        shop: {},
+        categories: [],
+        branchOffice: {},
+        products: {},
+        promotions: {},
+      },
+    };
+  }
 }
