@@ -92,7 +92,7 @@ ProductModalFeature.propTypes = {
       categoriaCaracteristica: PropTypes.string,
       limiteCaracteristica: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       tipoCaracteristica: PropTypes.string,
-    })
+    }),
   ).isRequired,
 };
 
@@ -128,8 +128,8 @@ ProductModal.propTypes = {
           categoriaCaracteristica: PropTypes.string,
           limiteCaracteristica: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
           tipoCaracteristica: PropTypes.string,
-        })
-      )
+        }),
+      ),
     ),
   }).isRequired,
   onCloseModal: PropTypes.func.isRequired,

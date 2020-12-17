@@ -148,8 +148,8 @@ Product.propTypes = {
           categoriaCaracteristica: PropTypes.string,
           limiteCaracteristica: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
           tipoCaracteristica: PropTypes.string,
-        })
-      )
+        }),
+      ),
     ),
   }),
 };
@@ -164,7 +164,7 @@ ProductExtra.propTypes = {
       categoriaCaracteristica: PropTypes.string,
       limiteCaracteristica: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       tipoCaracteristica: PropTypes.string,
-    })
+    }),
   ).isRequired,
 };
 

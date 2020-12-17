@@ -3,10 +3,8 @@ import styles from 'styles/ProductList.module.sass';
 import ProductItem from 'components/ProductItem';
 
 const ProductList = ({ productCategory, productListData, onSelectProduct }) => (
-  <div className={`${styles.container}`}>
-    <h2 className={styles.title} id={productCategory}>
-      {productCategory}
-    </h2>
+  <div className={`${styles.container}`} id={productCategory}>
+    <h2 className={styles.title}>{productCategory}</h2>
     <div className="row">
       {productListData.map((product) => (
         <ProductItem key={product.id} product={product} onSelectProduct={onSelectProduct} />
@@ -49,10 +47,10 @@ ProductList.propTypes = {
             categoriaCaracteristica: PropTypes.string,
             limiteCaracteristica: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             tipoCaracteristica: PropTypes.string,
-          })
-        )
+          }),
+        ),
       ),
-    })
+    }),
   ).isRequired,
   onSelectProduct: PropTypes.func.isRequired,
 };

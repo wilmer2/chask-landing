@@ -88,7 +88,7 @@ PromotionList.propTypes = {
       tipoProducto: PropTypes.string,
       urlImagen: PropTypes.string,
       volumenProducto: PropTypes.number,
-    })
+    }),
   ).isRequired,
 };
 export default PromotionList;

@@ -76,8 +76,8 @@ ProductItem.propTypes = {
           categoriaCaracteristica: PropTypes.string,
           limiteCaracteristica: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
           tipoCaracteristica: PropTypes.string,
-        })
-      )
+        }),
+      ),
     ),
   }).isRequired,
   onSelectProduct: PropTypes.func.isRequired,

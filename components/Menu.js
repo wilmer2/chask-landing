@@ -50,7 +50,7 @@ Menu.propTypes = {
       idSucursal: PropTypes.number,
       nombreCategoria: PropTypes.string,
       descripcionCategoria: PropTypes.string,
-    })
+    }),
   ).isRequired,
 };
 

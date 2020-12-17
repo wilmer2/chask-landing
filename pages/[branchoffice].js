@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Layout from 'components/Layout';
 import Head from 'next/head';
@@ -30,10 +30,13 @@ import productApi from 'shared/utils/api/product_api';
 import productImageApi from 'shared/utils/api/product_image_api';
 import productFeatureApi from 'shared/utils/api/product_feature_api';
 
-export default function Home({ shop, categories, branchOffice, products, promotions }) {
+export default function Home({
+  shop, categories, branchOffice, products, promotions,
+}) {
   const [selectedProducts, setSelectedProducts] = useState(products);
   const [selectedPromotions, setSelectedPromotions] = useState(promotions);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [searchProduct, setSearchProduct] = useState('');
 
   const handleSelectProduct = (product) => setSelectedProduct(product);
   const handleCloseModal = () => setSelectedProduct(null);
@@ -42,6 +45,11 @@ export default function Home({ shop, categories, branchOffice, products, promoti
     const filteredProducts = data.filter((product) => {
       const categoria = strNormalize(product.categoriaProducto);
       const nombre = strNormalize(product.nombreProducto);
+
+      if (product.descripcionProducto) {
+        const description = strNormalize(product.descripcionProducto);
+        return categoria.includes(str) || nombre.includes(str) || description.includes(str);
+      }
 
       return categoria.includes(str) || nombre.includes(str);
     });
@@ -59,6 +67,7 @@ export default function Home({ shop, categories, branchOffice, products, promoti
 
     setSelectedProducts(toProductsByCategory(filteredProducts));
     setSelectedPromotions(filteredPromotions);
+    setSearchProduct(search);
   };
 
   return (
@@ -94,6 +103,11 @@ export default function Home({ shop, categories, branchOffice, products, promoti
                 productListData={productListData}
               />
             ))}
+            {searchProduct && !selectedPromotions.length && (
+              <div className="d-flex justify-content-center align-items-center pt-4">
+                <p>No se encontraron resultados</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -119,7 +133,7 @@ Home.propTypes = {
       idSucursal: PropTypes.number,
       nombreCategoria: PropTypes.string,
       descripcionCategoria: PropTypes.string,
-    })
+    }),
   ),
   shop: PropTypes.shape({
     id: PropTypes.number,
@@ -195,11 +209,11 @@ Home.propTypes = {
               categoriaCaracteristica: PropTypes.string,
               limiteCaracteristica: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
               tipoCaracteristica: PropTypes.string,
-            })
-          )
+            }),
+          ),
         ),
-      })
-    )
+      }),
+    ),
   ),
   promotions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -224,7 +238,7 @@ Home.propTypes = {
       tipoProducto: PropTypes.string,
       urlImagen: PropTypes.string,
       volumenProducto: PropTypes.number,
-    })
+    }),
   ),
 };
 
@@ -243,7 +257,7 @@ export async function getServerSideProps({ params }) {
     const productImages = await productImageApi.findByProductIds(productParamsIds, accessToken);
     const featuresPurchased = await productFeatureApi.findAllPurchased(
       productParamsIds,
-      accessToken
+      accessToken,
     );
     const featuresFree = await productFeatureApi.findAllFree(productParamsIds, accessToken);
     const products = toProducts(productsResponse, productImages, featuresPurchased, featuresFree);
@@ -257,8 +271,7 @@ export async function getServerSideProps({ params }) {
         promotions,
       },
     };
-  } catch (error) {
-    console.log('error', error);
+  } catch {
     return {
       props: {
         error: true,
